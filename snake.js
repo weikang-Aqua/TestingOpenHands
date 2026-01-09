@@ -1,3 +1,4 @@
+
 // Snake Game
 let snakeCanvas, snakeCtx;
 let snake = [];
