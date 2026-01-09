@@ -125,15 +125,18 @@ class GoGame:
         """
         Check if placing a stone would be suicide (placing with no liberties
         and not capturing any opponent stones).
+        
+        Note: This method temporarily modifies board state for checking purposes.
+        It is designed for single-threaded use only.
         """
-        # Temporarily place the stone
+        # Temporarily place the stone to test the position
         self.board[row][col] = color
         
         # Check if this stone's group has liberties
         group = self.get_group(row, col)
         has_liberties = self.count_liberties(group) > 0
         
-        # Remove the temporary stone
+        # Remove the temporary stone (restore board state)
         self.board[row][col] = self.EMPTY
         
         if has_liberties:

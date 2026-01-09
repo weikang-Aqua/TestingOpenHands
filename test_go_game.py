@@ -73,31 +73,18 @@ def test_suicide_prevention():
     print("\nTesting suicide prevention...")
     game = GoGame(size=9)
     
-    # Set up a situation where a move would be suicide
-    # Create a surrounded position
-    game.make_move(4, 4)  # Black
-    game.make_move(3, 5)  # White
+    # Set up: surround position (4, 5) with black stones
+    game.make_move(3, 5)  # Black
+    game.make_move(0, 0)  # White elsewhere
     game.make_move(5, 5)  # Black
-    game.make_move(4, 6)  # White
-    game.make_move(4, 5)  # Black
-    game.make_move(5, 4)  # White
+    game.make_move(0, 1)  # White elsewhere
+    game.make_move(4, 4)  # Black
+    game.make_move(0, 2)  # White elsewhere
+    game.make_move(4, 6)  # Black
     
-    # Now position (4, 5) is surrounded by white (except diagonal)
-    # Wait, (4, 5) is already taken by black. Let me fix this test.
-    
-    game2 = GoGame(size=9)
-    # Set up: surround (4, 5) with black stones
-    game2.make_move(3, 5)  # Black
-    game2.make_move(0, 0)  # White elsewhere
-    game2.make_move(5, 5)  # Black
-    game2.make_move(0, 1)  # White elsewhere
-    game2.make_move(4, 4)  # Black
-    game2.make_move(0, 2)  # White elsewhere
-    game2.make_move(4, 6)  # Black
-    
-    # Now (4, 5) is surrounded by black stones
-    # White trying to place at (4, 5) would be suicide
-    assert not game2.make_move(4, 5), "Should prevent suicide move"
+    # Now position (4, 5) is surrounded by black stones on all four sides
+    # White trying to place at (4, 5) would be suicide (no liberties)
+    assert not game.make_move(4, 5), "Should prevent suicide move"
     
     print("✓ Suicide prevention test passed")
 
